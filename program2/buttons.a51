@@ -1,14 +1,14 @@
-botao1:
-        jb      P3.3,botao2
+button1:
+        jb      P3.3,button2
         acall   delay1s
         mov     P0,#00001111b
-        jmp     botao1
+        jmp     button1
 
-botao2:
-        jb      P3.2,botao1
+button2:
+        jb      P3.2,button1
         acall   delay1s
         mov     P0,#11110000b
-        jmp     botao2
+        jmp     button2
 
 
 delay1s:

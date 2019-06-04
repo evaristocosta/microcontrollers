@@ -27,6 +27,4 @@ aux2:
         djnz    R2,aux2
         djnz    R1,aux1
         ret
-
-
 end
