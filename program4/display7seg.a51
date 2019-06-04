@@ -1,4 +1,4 @@
-        mov     20h,#11000000b	; salva os valores do display
+        mov     20h,#11000000b	; save display values
         mov     21h,#11111001b
         mov     22h,#10100100b
         mov     23h,#10110000b
@@ -15,41 +15,41 @@
         mov     2Eh,#10000110b
         mov     2Fh,#10001110b
 
-        mov     R0,#20h			; usa R0 pra acessar os valores
+        mov     R0,#20h			; use R0 to access the values
         mov     P0,20h
         
       
-botao1:
-        jb      P3.3,botao2
+button1:
+        jb      P3.3,button2
         acall   delay
 
         inc     R0
 
-        mov     P1,R0          ; P1 serve como comparador (acesso bit a bit)
-        jb      P1.4,reset     ; P1.4 sempre 0. Se 1, então 30h. Se não, continua
+        mov     P1,R0          ; P1 work comparing (access bit-bit)
+        jb      P1.4,reset     ; P1.4 always 0. If 1, then 30h. Else, continues
 
         mov     P0,@R0
-        jmp     botao1
+        jmp     button1
  
-botao2:
-        jb      P3.2,botao1
+button2:
+        jb      P3.2,button1
         acall   delay
 
         dec     R0
 
         mov     P1,R0
-        jnb     P1.5,reset2     ; P1.5 sempre 1. Se 0, então 1fh. Se não, continua
+        jnb     P1.5,reset2     ; P1.5 always 1. If 0, then 1fh. Else, continue
 
         mov     P0,@R0
-        jmp     botao2
+        jmp     button2
         
-reset:                          ; volta R0 pro começo
+reset:                          ; send R0 to start
         mov     R0,#20h
-        jmp     3Bh             ; volta no mov, linha 28 (PC)
+        jmp     3Bh             ; back mov, line 28 (PC)
 
-reset2:                         ; manda R0 pro final
+reset2:                         ; send R0 to the end
         mov     R0,#2Fh
-        jmp     4Bh             ; volta no mov, linha 40 (PC)
+        jmp     4Bh             ; back mov, line 40 (PC)
 
 
 

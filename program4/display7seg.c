@@ -3,34 +3,34 @@
 void MSDelay(unsigned int);
 
 void main(void) {
-	// salva valores do display, em decimal
+	// save display values
 	int display[16] = {192, 249, 164, 176, 153, 146, 130, 248, 128, 144, 136, 131, 198, 161, 134, 142};
-	int contador = 1;
+	int counter = 1;
 	
-	// começa display no '0'
+	// start display on '0'
 	P0 = display[0];
 	
 	while(1) {
 		if(P3_2 == 0) {
 			MSDelay(200);
-			++contador;
+			++counter;
 			
-			// se contador == 16, significa que chegou ao fim
-			if(contador == 16)
-				contador = 1;
+			// if counter == 16, its the end
+			if(counter == 16)
+				counter = 1;
 				
-			// contador serve de índice do vetor
-			P0 = display[contador-1];
+			// counter is the vector indexes
+			P0 = display[counter-1];
 		
 		} else if(P3_3 == 0) {
 			MSDelay(200);
-			--contador;
+			--counter;
 			
-			// se contador == 0, significa que chegou no começo
-			if(contador == 0)
-				contador = 16;
+			// if counter == 0, it reached the start
+			if(counter == 0)
+				counter = 16;
 				
-			P0 = display[contador-1];	
+			P0 = display[counter-1];	
 		}
 	}
 }
