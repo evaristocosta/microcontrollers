@@ -1,4 +1,4 @@
-##Program 1
+## Program 1
 
 Program to flash 8 LEDs allocated to the PORT0 pins:
 
