@@ -1,20 +1,20 @@
 #include <at89x52.h>
 
 int display[16] = {192, 249, 164, 176, 153, 146, 130, 248, 128, 144, 136, 131, 198, 161, 134, 142};
-int contador1 = 0;
-int contador2 = 0;
+int counter1 = 0;
+int counter2 = 0;
 
 void resetTimer(void);
 
-void tempo0(void) __interrupt(1) {
-	++contador1;
-	if(contador1 == 20){
-		++contador2;
-		if(contador2 == 16)
-			contador2 = 0;
+void time0(void) __interrupt(1) {
+	++counter1;
+	if(counter1 == 20){
+		++counter2;
+		if(counter2 == 16)
+			counter2 = 0;
 		
-		P0 = display[contador2];
-		contador1 = 0;
+		P0 = display[counter2];
+		counter1 = 0;
 	}
 	resetTimer();
 }

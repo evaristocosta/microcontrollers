@@ -1,7 +1,7 @@
-        org     0000h           ;Onde o programa come?a ap?s o RESET
-        ajmp    inicio          ;Pula os endere?os previstos de interrup??o, por meio da label INICIO 
+        org     0000h           
+        ajmp    start          
  
-        org     000Bh           ;endere?o TIMER0
+        org     000Bh           
         mov     TH0,#HIGH(65535-50000)
         mov     TL0,#LOW(65535-50000)
         clr     TF0
@@ -10,7 +10,7 @@
         jz      resetAcc
         reti
  
-inicio:
+start:
         mov     20h,#01000000b
         mov     21h,#01111001b
         mov     22h,#00100100b

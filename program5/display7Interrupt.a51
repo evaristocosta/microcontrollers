@@ -1,20 +1,20 @@
-         org     0000h           ;Onde o programa come?a ap?s o RESET
-         ajmp    inicio          ;Pula os endere?os previstos de interrup??o, por meio da label INICIO 
+		org     0000h           
+		ajmp    start          
 
-        org     0003h           ;endere?o da interrup??o INT0
+        org     0003h           
         inc     R0
         mov     ACC,R0
-        jb      ACC.4,resetBotao1
+        jb      ACC.4,resetButton1
         reti
 
 
-        org     0013h           ;endere?o da interrup??o INT1
+        org     0013h
         dec     R0              
         mov     ACC,R0
-        jnb      ACC.5,resetBotao2
+        jnb     ACC.5,resetButton2
         reti
 
-inicio:
+start:
         mov     20h,#01000000b
         mov     21h,#01111001b
         mov     22h,#00100100b
@@ -43,14 +43,10 @@ main:
         mov     P0,@R0
         jmp     main
 
-resetBotao1:
+resetButton1:
         mov     R0,#20h
         reti
         
-resetBotao2:
+resetButton2:
         mov     R0,#2Fh
         reti
-
-
-        
-        
