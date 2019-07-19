@@ -1,9 +1,9 @@
 #include <at89x52.h>
 
-int numero = 0;
+int num = 0;
 
-void transmite() {
-	SBUF = numero;
+void transmission() {
+	SBUF = num;
 
 	while(!TI) {}
 	
@@ -19,11 +19,11 @@ void main() {
 	
 	while(1) {
 		if(P2_0 == 0) {
-			numero = 0b01111001;
-			transmite();
+			num = 0b01111001;
+			transmission();
 		} else if(P2_1 == 0) {
-			numero = 0b00100100;
-			transmite();
+			num = 0b00100100;
+			transmission();
 		}
 	}
 }
