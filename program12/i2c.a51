@@ -1,17 +1,17 @@
 org     0000h
 ljmp    main
 
-;Portas de comunicacao
-sda equ P1.1  ;dado serial
-scl equ P1.0  ;clock serial
+;Com ports
+sda equ P1.1  ;serial data
+scl equ P1.0  ;serial clock
 
-;Inicializacao da com. I2C
+;Com start
 i2cinit:
         setb sda
         setb scl
         ret
 
-;Condicao de restart da com. I2C
+;Com restart condition
 rstart:
         clr scl
         setb sda
@@ -19,14 +19,14 @@ rstart:
         clr sda
         ret
 
-;Condicao de começo da com. I2C
+;Com start condition
 startc:
         setb scl
         clr sda
         clr scl
         ret
 
-;Condicao de parada pro bus I2C
+;I2C bus stop condition
 stop:
         clr scl
         clr sda
@@ -34,7 +34,7 @@ stop:
         setb sda
         ret
 
-;Funcao de envio de dados 
+;data sending funtion 
 send:
         mov r7,#08
 back:
@@ -50,7 +50,7 @@ back:
         clr scl
         ret
 
-;ACK e NAK pro bus I2C
+;ACK and NAK for I2C bus
 ack:
         clr sda
         setb scl
@@ -65,7 +65,7 @@ nak:
         setb scl
         ret
 
-;Recepcao de dados do bus I2C
+;data receiving from I2C bus 
 recv:
         mov r7,#08
 back2:
@@ -78,7 +78,7 @@ back2:
         setb sda
         ret
 
-; Envio de 3 dados e recepcao dos mesmos com inversao de ports
+; Sending of 3 data and reception of same with ports inversion 
 main:
         mov     P2,#0
         lcall   i2cinit
@@ -87,7 +87,7 @@ rep:
         mov     a,#20h
         acall   send
 
-        ;envio dos dados
+        ;send data
         mov     a,#00001111b
         acall   send
                
@@ -96,15 +96,15 @@ rep:
 
         acall   stop
 
-botao:
-        jnb     P1.7, envio
-        jmp     botao
-envio:
+button:
+        jnb     P1.7, send
+        jmp     button
+send:
         lcall   rstart
         mov     a,#21h
         acall   send
     
-        ;recepcao dos dados
+        ;data receiving
         acall   recv
         mov     P2,a
         acall   ack

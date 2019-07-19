@@ -1,36 +1,36 @@
-; Mapeamento de hardware
+; hardware mapping
         rs      equ     P1.5
         rw      equ     P1.6
         en      equ     P1.7
         dat     equ     P2
 
 ; ---------------------------
-; Principal
-inicio:
+; principal
+start:
         acall   lcd_init
         acall   lcd_home
 
 ; ---------------------------
-; Verificação por coluna
-coluna:
+; column check
+column:
         mov     P3,#0FEh
-        acall   linha
+        acall   line
         mov     P3,#0FDh
-        acall   linha
+        acall   line
         mov     P3,#0FBh
-        acall   linha
-        jmp     coluna
+        acall   line
+        jmp     column
 
-; Verificação por linha
-linha:
-        jnb     P3.4,funcao
-        jnb     P3.5,funcao
-        jnb     P3.6,funcao
-        jnb     P3.7,funcao
+; line check
+line:
+        jnb     P3.4,function
+        jnb     P3.5,function
+        jnb     P3.6,function
+        jnb     P3.7,function
         ret
 
-; Passa dado a ser escrito
-funcao:
+; send data to be written
+function:
         mov     A,#0FFh
         xrl     A,P3
         acall   waitButton        
@@ -38,7 +38,7 @@ funcao:
         ret
 
 ; ---------------------------
-; escreve dado
+; write data
 wdat:
         clr     en
         setb    rs
@@ -51,7 +51,7 @@ wdat:
         acall   wait
         ret
 
-; configura display
+; display config
 config:
         clr     en
         clr     rs
@@ -65,7 +65,7 @@ config:
         acall   wait
         ret
 
-; inicia o display
+; start display
 lcd_init:
         acall   wait
         mov     a,#00110100b
@@ -83,7 +83,7 @@ lcd_home:
         ret
 
 ; ---------------------------
-; delay mais curto
+; shorter delay 
 wait:
         mov     R1,#15d
 aux1:
@@ -105,7 +105,7 @@ aux2:
         djnz    R1,aux1
         ret
 
-; delay do botao
+; button delay 
 waitButton:
         mov     R3,#250d
 aux3:

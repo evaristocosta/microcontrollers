@@ -1,26 +1,26 @@
 #include <at89x52.h>
 
 int display[16] = {192, 249, 164, 176, 153, 146, 130, 248, 128, 144, 136, 131, 198, 161, 134, 142};
-int contadorMux = 0;
-int dezena = 0;
-int unidade = 0;
+int muxCounter = 0;
+int ten = 0;
+int unity = 0;
 
 void resetTimer();
 
-// funcao de mux; alterna entre estados/visores
-void tempo0(void) __interrupt(1) {
-	++contadorMux;
-	if(contadorMux == 5) {
+// mux function; change states/viewers
+void time0(void) __interrupt(1) {
+	++muxCounter;
+	if(muxCounter == 5) {
 		if(P3_0 == 1) {
 			P3_0 = 0;
 			P3_1 = 1;
-			P0 = display[unidade];
+			P0 = display[unity];
 		} else {
 			P3_0 = 1;
 			P3_1 = 0;
-			P0 = display[dezena];
+			P0 = display[ten];
 		}
-		contadorMux = 0;
+		muxCounter = 0;
 	}
 	resetTimer();
 }
@@ -40,21 +40,21 @@ void main() {
 	resetTimer();
 	
 	while(1) {
-		// rotina padrão de verificação do conversor
+		// converter function
 		P3_7 = 0;
 		P3_6 = 0;
 		P3_5 = 0;
 		P3_5 = 1;
 		
-		// representantes de unidade e dezena
-		unidade = P1%10;
-		dezena = P1/10;
+		// unity and ten
+		unity = P1%10;
+		ten = P1/10;
 		
 		P3_7 = 1;
 	}
 }
 
-// reinicia TIMER
+// restart TIMER
 void resetTimer() {
 	TH0 = 60;
 	TL0 = 175;

@@ -1,7 +1,7 @@
-        org     0000h           ;Onde o programa começa após o RESET
-        ajmp    setaMem         ;Pula os endereços previstos de interrupção, por meio da label setaMem 
+        org     0000h           
+        ajmp    setMem         ;jum interruption addresses, thru label setMem 
  
-        org     000Bh   ;endereço TIMER0
+        org     000Bh   ;TIMER0 addr
         mov     TH0,#HIGH(65535-50000)
         mov     TL0,#LOW(65535-50000)
         clr     TF0
@@ -10,7 +10,7 @@
         reti
  
   
-setaMem:  ; valores do display
+setMem:  ; display values
         mov     20h,#01000000b
         mov     21h,#01111001b
         mov     22h,#00100100b
@@ -22,21 +22,21 @@ setaMem:  ; valores do display
         mov     28h,#00000000b
         mov     29h,#00010000b
 
-        mov     R0,#20h ; apontadores de memória
+        mov     R0,#20h ; mem pointers
         mov     R1,#20h
         
-        mov     P0,20h ; saída do display
+        mov     P0,20h ; display out
 
         ; mux
         setb    P3.0
         clr     P3.1
 
-        ; configuração geral 
+        ; general config
         mov     IE,#10000010b
         mov     IP,#00000010b
         mov     TMOD,#00000001b
 
-        ; inicio do TIMER0
+        ; begin TIMER0
         mov     TH0,#HIGH(65535-50000)
         mov     TL0,#LOW(65535-50000)
         clr     TF0
@@ -44,18 +44,18 @@ setaMem:  ; valores do display
         ; 50 x 5 = 25fps
         mov     R2,#5d
 
-main:   ; rotina padrão de verificação do conversor
+main:   ; conversor check function
         clr     P3.7
         clr     P3.6
         clr     P3.5
         setb    P3.5
         mov     A,P1
 
-        ; configura o display
+        ; display config
         mov     B,#10d
         div     AB ; == mod
 
-        add     A,#20h ; soma pra alcançar parte certa da memória
+        add     A,#20h ; sum to reach right location on memory
         mov     R1,A
 
         mov     A,B

@@ -11,14 +11,14 @@ rot1:
         jmp     rot1
 
 rot2:
-        jnb      P2.4,funcao
-        jnb      P2.5,funcao
-        jnb      P2.6,funcao
-        jnb      P2.7,funcao
+        jnb      P2.4,function
+        jnb      P2.5,function
+        jnb      P2.6,function
+        jnb      P2.7,function
         ret
 
-funcao:      
-        ;acall   delay          ;por alguma razão, delay atrapalha
+function:      
+        ;acall   delay          ;delay is a problem
         mov     A,#0FFh
         xrl     A,P2
         mov     P0,A
