@@ -1,47 +1,47 @@
 #include <at89x52.h>
 
 int display[16] = {192, 249, 164, 176, 153, 146, 130, 248, 128, 144, 136, 131, 198, 161, 134, 142};
-int contadorDeTempo = 0;
-int contador1 = 0;
-int contador2 = 0;
-int contadorMux = 0;
+int timeCounter = 0;
+int counter1 = 0;
+int counter2 = 0;
+int counterMux = 0;
 
 void resetTimer1();
 void resetTimer2();
 
-// funcao de contagem, de 0 a 9
-// contador1 referente ao primeiro display,
-// contador2 referente ao segundo
-void tempo0(void) __interrupt(1) {
-	++contadorDeTempo;
-	if(contadorDeTempo == 20){
-		++contador1;
-		if(contador1 == 10) {
-			contador1 = 0;
-			++contador2;
+// counting function, 0 to 9
+// counter1 of first display,
+// counter2 of second
+void time0(void) __interrupt(1) {
+	++timeCounter;
+	if(timeCounter == 20){
+		++counter1;
+		if(counter1 == 10) {
+			counter1 = 0;
+			++counter2;
 		}
-		if(contador2 == 10)
-			contador2 = 0;
+		if(counter2 == 10)
+			counter2 = 0;
 		
-		contadorDeTempo = 0;
+		timeCounter = 0;
 	}
 	resetTimer1();
 }
 
-// funcao de mux; alterna entre estados/visores
-void tempo1(void) __interrupt(3) {
-	++contadorMux;
-	if(contadorMux == 5) {
+// mux
+void time1(void) __interrupt(3) {
+	++counterMux;
+	if(counterMux == 5) {
 		if(P2_0 == 1) {
 			P2_0 = 0;
 			P2_1 = 1;
-			P0 = display[contador1];
+			P0 = display[counter1];
 		} else {
 			P2_0 = 1;
 			P2_1 = 0;
-			P0 = display[contador2];
+			P0 = display[counter2];
 		}
-		contadorMux = 0;
+		counterMux = 0;
 	}
 	resetTimer2();
 }

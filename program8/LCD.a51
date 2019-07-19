@@ -1,23 +1,23 @@
-; Mapeamento de hardware
+; hardware mapping
         rs      equ     P1.5
         rw      equ     P1.6
         en      equ     P1.7
         dat     equ     P2
 
 ; ---------------------------
-; Principal
-inicio:
+; principal
+starter:
         acall   lcd_init
-repeticao:
+repetition:
         acall   lcd_home
         mov     dptr,#LCD1
         acall   send_lcd
 
-        acall   segunda_linha
+        acall   second_line
         mov     dptr,#LCD2
         acall   send_lcd
         
-        ajmp    repeticao
+        ajmp    repetition
 
 lcd_init:
         acall   wait
@@ -31,13 +31,13 @@ lcd_init:
         ret
 
 LCD1:
-        db      '  Mototáxi  do  '
+        db      'Microcontrolled '
 
 LCD2:
-        db      '      Amor      '
+        db      '     Systems    '
 
 ; ---------------------------
-; manda lcd
+; send lcd
 send_lcd:
         mov     R0,#0d
 send:
@@ -50,7 +50,7 @@ send:
         ret
 
 ; ---------------------------
-; escreve dado
+; write data
 wdat:
         clr     en
         setb    rs
@@ -76,7 +76,7 @@ config:
         acall   wait
         ret
 
-segunda_linha:
+second_line:
         mov     a,#11000000b
         acall   config
         ret

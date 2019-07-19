@@ -1,7 +1,7 @@
-        org     0000h           ;Onde o programa come?a ap?s o RESET
-        ajmp    inicio          ;Pula os endere?os previstos de interrup??o, por meio da label INICIO 
+        org     0000h           
+        ajmp    starter          
  
-        org     000Bh           ;endere?o TIMER0
+        org     000Bh           ;TIMER0 address
         mov     TH0,#HIGH(65535-50000)
         mov     TL0,#LOW(65535-50000)
         clr     TF0
@@ -10,7 +10,7 @@
         jz      resetAcc
         reti
  
-        org     001Bh   ;endereço TIMER1
+        org     001Bh   ;TIMER1 address
         mov     TH1,#HIGH(65535-50000)
         mov     TL1,#LOW(65535-50000)
         clr     TF1
@@ -20,7 +20,7 @@
         reti
 
  
-inicio:
+starter:
         mov     20h,#01000000b
         mov     21h,#01111001b
         mov     22h,#00100100b
@@ -31,7 +31,7 @@ inicio:
         mov     27h,#01111000b
         mov     28h,#00000000b
         mov     29h,#00010000b
-        ; ate aqui
+        
         mov     2Ah,#00001000b
         mov     2Bh,#00000011b
         mov     2Ch,#01000110b
@@ -47,12 +47,12 @@ inicio:
         setb    P2.0
         clr     P2.1
         
-        ; configuração geral 
+        ; general config
         mov     IE,#10001010b
         mov     IP,#00001000b
         mov     TMOD,#00010001b
 
-        ; inicio do TIMER0 
+        ; TIMER0 start
         mov     TH0,#HIGH(65535-50000)
         mov     TL0,#LOW(65535-50000)
         clr     TF0
@@ -60,7 +60,7 @@ inicio:
         ; 50 x 20 = 1s
         mov     A,#20d
 
-        ; inicio do TIMER1
+        ; TIMER1 start
         mov     TH1,#HIGH(65535-50000)
         mov     TL1,#LOW(65535-50000)
         clr     TF1
